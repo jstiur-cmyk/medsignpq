@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-head">
+    <div><h1>{{ user.org_name }}</h1><p>{{ user.org_type }} · Penanggung jawab: {{ user.pic_name }}</p></div>
+    <a class="btn btn-teal" href="{{ url_for('sign') }}">+ Tandatangani Citra</a>
+  </div>
+  <div class="grid-4" style="margin-bottom:22px">
+    <div class="kpi"><span>Paket aktif</span><b>{{ plan.nama }}</b><span>s.d. {{ user.plan_until|tgl }}</span></div>
+    <div class="kpi"><span>Citra bulan ini</span><b>{{ used }} / {{ plan.kuota }}</b>
+      <div class="bar"><div style="width:{{ (used / plan.kuota * 100)|round(0) }}%"></div></div></div>
+    <div class="kpi"><span>Total citra ditandatangani</span><b>{{ rows|length }}</b></div>
+    <div class="kpi"><span>Algoritma</span><b style="font-size:16px;margin-top:8px">ECDSA P-256 + ML-DSA-65</b></div>
+  </div>
+  <h3 style="color:var(--navy);margin:8px 0 12px">Riwayat Penandatanganan</h3>
+  {% if rows %}
+  <table>
+    <thead><tr><th>ID</th><th>File</th><th>Keterangan</th><th>Waktu</th><th>Dicek</th><th></th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td class="mono">{{ r.id }}</td>
+        <td>{{ r.filename }}<div class="hint">{{ r.width }}×{{ r.height }} px</div></td>
+        <td>{{ r.description or '-' }}</td>
+        <td>{{ r.signed_at|tgl }}</td>
+        <td><span class="badge info">{{ r.n_cek }}×</span></td>
+        <td style="white-space:nowrap"><a class="btn btn-outline btn-sm" href="{{ url_for('download', sid=r.id) }}">Unduh</a>
+            <a class="btn btn-outline btn-sm" href="{{ url_for('sign_result', sid=r.id) }}">Detail</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="card empty">Belum ada citra yang ditandatangani.<br><br><a class="btn btn-teal" href="{{ url_for('sign') }}">Tandatangani citra pertama</a></div>
+  {% endif %}
+</div>
+{% endblock %}

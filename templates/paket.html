@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Paket Layanan{% endblock %}
+{% block content %}
+<section>
+  <div class="container">
+    <div class="section-title"><h2>Paket Layanan</h2><p>Pilih paket sesuai kebutuhan fasyankes Anda. Cek keaslian citra selalu gratis untuk siapa saja.</p></div>
+    <div class="grid-3">
+      <div class="card price-card featured">
+        <span class="badge ok">Untuk mulai</span><h3>Uji Coba</h3><div class="price">Gratis</div>
+        <ul><li>Berlaku 3 bulan</li><li>Maksimal 300 citra/bulan</li><li>Tanda tangan hibrida ECDSA + ML-DSA</li><li>Cek keaslian publik</li></ul>
+        <a class="btn btn-teal btn-block" href="{{ url_for('register') }}">Daftar Sekarang</a>
+      </div>
+      <div class="card price-card">
+        <span class="badge info">Klinik</span><h3>Klinik</h3><div class="price">Rp350.000<small style="font-size:14px;color:var(--muted)">/bulan</small></div>
+        <ul><li>Maksimal 500 citra/bulan</li><li>3 akun pengguna</li><li>Riwayat & log audit</li><li>Bantuan via WhatsApp</li></ul>
+        <a class="btn btn-outline btn-block" href="https://wa.me/?text=Halo%20MedSign%20PQ%2C%20saya%20tertarik%20paket%20Klinik" target="_blank">Hubungi Kami</a>
+      </div>
+      <div class="card price-card">
+        <span class="badge info">Rumah Sakit</span><h3>Rumah Sakit</h3><div class="price">Rp750.000<small style="font-size:14px;color:var(--muted)">/bulan</small></div>
+        <ul><li>Maksimal 2.000 citra/bulan</li><li>10 akun pengguna</li><li>Tanda tangan massal & API SIMRS (segera)</li><li>Pendampingan pemasangan</li></ul>
+        <a class="btn btn-outline btn-block" href="https://wa.me/?text=Halo%20MedSign%20PQ%2C%20saya%20tertarik%20paket%20Rumah%20Sakit" target="_blank">Hubungi Kami</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

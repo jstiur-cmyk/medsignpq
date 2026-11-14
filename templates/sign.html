@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Tandatangani Citra{% endblock %}
+{% block content %}
+<div class="auth-wrap container" style="max-width:640px">
+  <form class="form-card" method="post" enctype="multipart/form-data">
+    <h1>Tandatangani Citra Rontgen</h1>
+    <p class="sub">Sisa kuota bulan ini: <b>{{ remaining }}</b> dari {{ plan.kuota }} citra (paket {{ plan.nama }}).</p>
+    <label class="dropzone">
+      <input type="file" name="image" accept=".png,.jpg,.jpeg" required>
+      <div class="big">🩻</div>
+      <div><b>Klik atau seret file ke sini</b></div>
+      <div class="hint">Format PNG atau JPG, maksimal 20 MB. Hasil selalu berupa PNG bertanda tangan.</div>
+      <div class="fname"></div>
+    </label>
+    <label for="description">Keterangan (opsional)</label>
+    <input type="text" id="description" name="description" maxlength="120" placeholder="Contoh: Thorax PA, rujukan ke RSUD">
+    <div class="hint">Jangan menuliskan nama atau identitas pasien.</div>
+    <button class="btn btn-primary btn-block" style="margin-top:22px" type="submit">Tandatangani dengan ECDSA + ML-DSA</button>
+  </form>
+</div>
+{% endblock %}

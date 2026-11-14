@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Info Tanda Tangan {{ sid }}{% endblock %}
+{% block content %}
+<div class="container" style="max-width:820px">
+  <div class="page-head"><div><h1>Info Tanda Tangan</h1><p class="mono">{{ sid }}</p></div></div>
+  {% if record %}
+  <div class="result ok"><div class="ico">✓</div><div><h2>Terdaftar di MedSign PQ</h2>
+    <p>ID ini dibuat oleh {{ record.org_name }}. Untuk memastikan citra yang Anda terima belum diubah, unggah file PNG-nya di bawah.</p></div></div>
+  <div class="card detail"><dl>
+    <dt>Fasyankes</dt><dd>{{ record.org_name }} ({{ record.org_type }})</dd>
+    <dt>Waktu tanda tangan</dt><dd>{{ record.signed_at|tgl }}</dd>
+    <dt>Ukuran citra</dt><dd>{{ record.width }}×{{ record.height }} px</dd>
+    <dt>Hash citra (SHA3-256)</dt><dd class="mono">{{ record.image_hash }}</dd>
+  </dl></div>
+  <a class="btn btn-teal" style="margin-top:18px" href="{{ url_for('check') }}">Unggah Citra untuk Dicek</a>
+  {% else %}
+  <div class="result warn"><div class="ico">?</div><div><h2>ID tidak ditemukan</h2><p>ID tanda tangan ini tidak terdaftar di MedSign PQ.</p></div></div>
+  {% endif %}
+</div>
+{% endblock %}

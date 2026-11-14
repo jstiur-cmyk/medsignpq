@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MedSign PQ{% endblock %} · MedSign PQ</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="nav">
+  <div class="container">
+    <a class="brand" href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='logo.png') }}" alt="MedSign PQ"></a>
+    <div class="nav-links">
+      <a href="{{ url_for('check') }}" class="{{ 'active' if request.endpoint in ('check','check_record') }}">Cek Keaslian</a>
+      <a href="{{ url_for('paket') }}" class="{{ 'active' if request.endpoint=='paket' }}">Paket</a>
+      {% if user %}
+        <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint=='dashboard' }}">Dashboard</a>
+        <a href="{{ url_for('sign') }}" class="{{ 'active' if request.endpoint in ('sign','sign_result') }}">Tandatangani</a>
+        <a href="{{ url_for('logout') }}">Keluar</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="{{ 'active' if request.endpoint=='login' }}">Masuk</a>
+        <a href="{{ url_for('register') }}" class="btn btn-teal btn-sm" style="color:#fff">Daftar Gratis</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}<div class="flash-wrap">{% for cat, m in msgs %}<div class="flash {{ cat }}">{{ m }}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+<footer>
+  <div class="container">
+    <div><b>MedSign PQ</b> — Citra Medis Asli, Aman hingga Era Kuantum</div>
+    <div>Kelompok 17 · D3 Teknologi Informasi · Institut Teknologi Del · 2026</div>
+  </div>
+</footer>
+<script>
+document.querySelectorAll('.dropzone').forEach(function(z){
+  var input=z.querySelector('input[type=file]'), name=z.querySelector('.fname');
+  z.addEventListener('click',function(e){ if(e.target!==input) input.click(); });
+  input.addEventListener('change',function(){ name.textContent = input.files.length ? input.files[0].name : ''; });
+  ['dragover','dragenter'].forEach(function(ev){ z.addEventListener(ev,function(e){e.preventDefault(); z.style.borderColor='#20BBB0';}); });
+  z.addEventListener('drop',function(e){ e.preventDefault(); input.files=e.dataTransfer.files; name.textContent=input.files[0].name; });
+});
+document.querySelectorAll('[data-copy]').forEach(function(b){
+  b.addEventListener('click',function(){ var i=document.getElementById(b.dataset.copy); i.select(); navigator.clipboard.writeText(i.value); b.textContent='Tersalin ✓'; });
+});
+</script>
+</body>
+</html>

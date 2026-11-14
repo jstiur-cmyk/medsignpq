@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Hasil Cek Keaslian{% endblock %}
+{% block content %}
+<div class="container" style="max-width:820px">
+  <div class="page-head"><div><h1>Hasil Cek Keaslian</h1><p>File: {{ filename }}</p></div>
+    <a class="btn btn-outline" href="{{ url_for('check') }}">Cek Citra Lain</a></div>
+
+  {% if status == 'valid' %}
+  <div class="result ok"><div class="ico">✓</div><div><h2>ASLI</h2>
+    <p>Citra tidak berubah sejak ditandatangani, dan kedua tanda tangan (ECDSA dan ML-DSA) valid.</p></div></div>
+  {% elif status == 'modified' %}
+  <div class="result bad"><div class="ico">✕</div><div><h2>TIDAK ASLI — citra telah diubah</h2>
+    <p>Tanda tangan ditemukan, tetapi isi piksel citra sudah berbeda dari saat ditandatangani.</p></div></div>
+  {% elif status == 'invalid' %}
+  <div class="result bad"><div class="ico">✕</div><div><h2>TIDAK ASLI — tanda tangan tidak valid</h2>
+    <p>Data tanda tangan di dalam file rusak atau dipalsukan.</p></div></div>
+  {% elif status == 'unknown' %}
+  <div class="result warn"><div class="ico">!</div><div><h2>Penandatangan tidak dikenal</h2>
+    <p>File berisi data tanda tangan, tetapi ID tanda tangan atau fasyankes tidak terdaftar di MedSign PQ.</p></div></div>
+  {% else %}
+  <div class="result warn"><div class="ico">?</div><div><h2>Belum ditandatangani</h2>
+    <p>Citra ini tidak memiliki tanda tangan MedSign PQ, sehingga keasliannya tidak dapat dipastikan. Minta file PNG asli dari pengirim.</p></div></div>
+  {% endif %}
+
+  {% if result %}
+  <div class="checks">
+    <div class="check-item"><b>Keutuhan piksel</b>{% if result.hash_ok %}<span class="badge ok">Cocok</span>{% else %}<span class="badge bad">Berubah</span>{% endif %}</div>
+    <div class="check-item"><b>Tanda tangan ECDSA</b>{% if result.ecdsa_ok %}<span class="badge ok">Valid</span>{% else %}<span class="badge bad">Tidak valid</span>{% endif %}</div>
+    <div class="check-item"><b>Tanda tangan ML-DSA</b>{% if result.mldsa_ok %}<span class="badge ok">Valid</span>{% else %}<span class="badge bad">Tidak valid</span>{% endif %}</div>
+  </div>
+  {% endif %}
+
+  {% if payload %}
+  <div class="card detail">
+    <dl>
+      <dt>ID tanda tangan</dt><dd class="mono">{{ payload.sid }}</dd>
+      <dt>Ditandatangani oleh</dt><dd>{{ signer.org_name if signer else payload.signer_name }}{% if signer %} ({{ signer.org_type }}){% endif %}</dd>
+      <dt>Waktu tanda tangan</dt><dd>{{ payload.signed_at|tgl }}</dd>
+      {% if record and record.description %}<dt>Keterangan</dt><dd>{{ record.description }}</dd>{% endif %}
+    </dl>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

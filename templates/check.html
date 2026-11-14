@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Cek Keaslian{% endblock %}
+{% block content %}
+<div class="auth-wrap container" style="max-width:640px">
+  <form class="form-card" method="post" enctype="multipart/form-data">
+    <h1>Cek Keaslian Citra</h1>
+    <p class="sub">Gratis untuk siapa saja, tanpa perlu akun. Unggah citra PNG yang Anda terima dari fasyankes.</p>
+    <label class="dropzone">
+      <input type="file" name="image" accept=".png,.jpg,.jpeg" required>
+      <div class="big">🔍</div>
+      <div><b>Klik atau seret citra ke sini</b></div>
+      <div class="hint">Gunakan file PNG asli dari pengirim (jangan hasil screenshot atau kompresi WhatsApp).</div>
+      <div class="fname"></div>
+    </label>
+    <button class="btn btn-primary btn-block" style="margin-top:22px" type="submit">Cek Sekarang</button>
+  </form>
+</div>
+{% endblock %}

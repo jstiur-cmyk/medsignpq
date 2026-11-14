@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Citra Ditandatangani{% endblock %}
+{% block content %}
+<div class="container" style="max-width:820px">
+  <div class="page-head"><div><h1>Citra berhasil ditandatangani</h1><p>Kirim file PNG ini ke dokter rujukan. Tanda tangan sudah tersimpan di dalam file.</p></div></div>
+  <div class="result ok">
+    <div class="ico">✓</div>
+    <div><h2>{{ row.id }}</h2><p>{{ row.filename }} · {{ row.width }}×{{ row.height }} px · {{ row.signed_at|tgl }}</p></div>
+  </div>
+  <div class="card detail">
+    <dl>
+      <dt>Ditandatangani oleh</dt><dd>{{ user.org_name }}</dd>
+      <dt>Algoritma</dt><dd>ECDSA P-256 + ML-DSA-65 (hibrida)</dd>
+      <dt>Hash citra (SHA3-256)</dt><dd class="mono">{{ row.image_hash }}</dd>
+      <dt>Keterangan</dt><dd>{{ row.description or '-' }}</dd>
+    </dl>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <b>Tautan cek keaslian</b>
+    <p class="hint" style="margin:4px 0 10px">Bagikan tautan ini bersama citra agar penerima tahu cara mengeceknya.</p>
+    <div class="copy"><input type="text" id="link" value="{{ check_url }}" readonly><button type="button" class="btn btn-outline btn-sm" data-copy="link">Salin</button></div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+    <a class="btn btn-teal" href="{{ url_for('download', sid=row.id) }}">Unduh PNG Bertanda Tangan</a>
+    <a class="btn btn-outline" href="{{ url_for('sign') }}">Tandatangani Citra Lain</a>
+    <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Ke Dashboard</a>
+  </div>
+</div>
+{% endblock %}

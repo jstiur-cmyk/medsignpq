@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Beranda{% endblock %}
+{% block content %}
+<header class="hero">
+  <div class="container">
+    <div>
+      <span class="tag">Tanda tangan digital hibrida pascakuantum</span>
+      <h1>Pastikan setiap foto rontgen tetap asli dan tidak diubah.</h1>
+      <p>MedSign PQ menandatangani citra rontgen dengan dua kunci sekaligus, yaitu <b>ECDSA</b> (klasik) dan <b>ML-DSA</b> (standar pascakuantum NIST). Dokter rujukan cukup mengunggah citra untuk mengecek keasliannya.</p>
+      <div class="hero-actions">
+        <a class="btn btn-teal" href="{{ url_for('register') }}">Coba Gratis 3 Bulan</a>
+        <a class="btn btn-outline" href="{{ url_for('check') }}">Cek Keaslian Citra</a>
+      </div>
+    </div>
+    <div class="hero-icon"><img src="{{ url_for('static', filename='icon.png') }}" alt=""></div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-title"><h2>Cara Kerja</h2><p>Tiga langkah, tanpa perlu mengganti sistem lama rumah sakit.</p></div>
+    <div class="grid-3">
+      <div class="card"><div class="step-no">1</div><h3>Daftar fasyankes</h3><p>Rumah sakit atau klinik membuat akun. Sistem otomatis membuat pasangan kunci ECDSA dan ML-DSA yang disimpan terenkripsi.</p></div>
+      <div class="card"><div class="step-no">2</div><h3>Tandatangani citra</h3><p>Radiografer mengunggah foto rontgen. Tanda tangan hibrida disisipkan ke metadata PNG sehingga ikut terbawa saat citra dirujuk.</p></div>
+      <div class="card"><div class="step-no">3</div><h3>Cek keaslian</h3><p>Penerima mengunggah citra di halaman Cek Keaslian. Citra dinyatakan asli hanya jika piksel tidak berubah dan kedua tanda tangan valid.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="container">
+    <div class="section-title"><h2>Mengapa MedSign PQ?</h2></div>
+    <div class="grid-4">
+      <div class="card"><h3>Tahan era kuantum</h3><p>ML-DSA (FIPS 204) tetap aman meski komputer kuantum mampu memecahkan RSA/ECDSA.</p></div>
+      <div class="card"><h3>Deteksi perubahan</h3><p>Perubahan satu piksel pun membuat citra dinyatakan TIDAK ASLI.</p></div>
+      <div class="card"><h3>Tanpa instalasi</h3><p>Cukup lewat browser, tidak perlu server atau tim IT khusus.</p></div>
+      <div class="card"><h3>Terjangkau</h3><p>Uji coba gratis 3 bulan, lalu berlangganan mulai Rp350.000/bulan.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title"><h2>Sudah digunakan</h2></div>
+    <div class="stats">
+      <div class="stat"><b>{{ stats.fasyankes }}</b><span>fasyankes terdaftar</span></div>
+      <div class="stat"><b>{{ stats.citra }}</b><span>citra ditandatangani</span></div>
+      <div class="stat"><b>{{ stats.cek }}</b><span>pengecekan keaslian</span></div>
+    </div>
+  </div>
+</section>
+{% endblock %}
